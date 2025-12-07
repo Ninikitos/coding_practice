@@ -19,5 +19,5 @@ Any module can be run directly:
 > If you disagree with the complexity note, let’s discuss. This repo is for learning together. 🙌
 
 ### Philosophy
-Progression > Perfection
-Document your thinking: TODO flows are part of the learning.
+- Progression > Perfection
+- Document your thinking: TODO flows are part of the learning.
