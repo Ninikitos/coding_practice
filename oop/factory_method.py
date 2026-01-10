@@ -116,3 +116,111 @@ print(' ')
 archer_skill.cast(archer, wizard)
 print(f'Wizzard, HP after hit: {wizard.hp}')
 print(' ')
+
+# -------------
+from abc import ABC, abstractmethod
+
+
+# Product
+class Color(ABC):
+
+    def __init__(self, is_metallic: bool, is_matte: bool):
+        self.is_metallic = is_metallic
+        self.is_matte = is_matte
+
+    @abstractmethod
+    def name(self) -> str:
+        pass
+
+    def paint(self):
+        print(f'Painting car in {self.name()} color')
+
+        if self.is_metallic:
+            print('Metalic color was added')
+        else:
+            print('No metallic added')
+
+        if self.is_matte:
+            print('Matte color was added')
+        else:
+            print('No matte added')
+
+        print('Painting done!')
+
+
+# Concrete products
+class ColorBlack(Color):
+    def name(self) -> str:
+        return 'black'
+
+class ColorRed(Color):
+    def name(self) -> str:
+        return 'red'
+
+class ColorBlue(Color):
+    def name(self) -> str:
+        return 'blue'
+
+# Concrete factory
+class ColorFactory(ABC):
+    @abstractmethod
+    def create(self) -> Color:
+        pass
+
+# Factory
+class ColorBlackMetalicFactory(ColorFactory):
+    def create(self) -> Color:
+        return ColorBlack(is_metallic=True, is_matte=False)
+
+class ColorRedMatteFactory(ColorFactory):
+    def create(self) -> Color:
+        return ColorRed(is_metallic=False, is_matte=True)
+
+class ColorBlueMatteFactory(ColorFactory):
+    def create(self) -> Color:
+        return ColorBlue(is_metallic=False, is_matte=True)
+
+# Client code
+def paint_car(factory: ColorFactory):
+    color = factory.create()
+    color.paint()
+
+
+paint_car(ColorBlackMetalicFactory())
+print(' ')
+paint_car(ColorRedMatteFactory())
+print(' ')
+paint_car(ColorBlueMatteFactory())
+
+class ColorNoABC:
+    def __init__(self, name: str, is_metallic: bool, is_matte: bool):
+        self.name = name
+        self.is_metallic = is_metallic
+        self.is_matte = is_matte
+
+    def paint(self):
+        print(f'Painting {self.name}')
+
+        if self.is_metallic:
+            print(f'Painting {self.name} metallic')
+        else:
+            print('Metallic not added')
+
+        if self.is_matte:
+            print(f'Painting {self.name} matte')
+        else:
+            print('Matte not added')
+
+color_black = ColorNoABC(name='Black', is_metallic=True, is_matte=False)
+color_red = ColorNoABC(name='Red', is_metallic=True, is_matte=False)
+color_blue = ColorNoABC(name='Blue', is_metallic=False, is_matte=True)
+
+def paint_a_car(color: ColorNoABC):
+    print('Car is being pass to painting factory')
+    color.paint()
+
+paint_a_car(color_black)
+print(' ')
+paint_a_car(color_red)
+print(' ')
+paint_a_car(color_blue)
