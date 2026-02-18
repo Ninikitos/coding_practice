@@ -1,3 +1,6 @@
+# __new__ dunder method is called before the class is being created.
+# The most common use is to implement a Singleton pattern (one instance of class can exist)
+
 class DataBase:
     __instance = None
 
@@ -32,7 +35,7 @@ db2 = DataBase('user_1', '4321', 73)
 print(id(db))
 print(id(db2))
 
-# This is expected in this type of Singleton version.
-# I didn't user __call__. Will practice that a bit later
+# This Singleton implementation has a bug, db2 init values will be used
+# even though db was the first one who was created.
 db.connect()
 db2.connect()
