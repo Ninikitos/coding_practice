@@ -1,5 +1,22 @@
-edge_list = [(1,2), (1,3), (2,3), (2,4), (4,5), (5,6), (6,7), (7,1)]
+class Node:
+    def __init__(self, index):
+        self.index = index
+        self.relationship = []
 
+class Graph:
+    def __init__(self):
+        self.nodes = [Node(0), Node(1), Node(2), Node(3), Node(4)]
+        self.nodes[0].relationship = [self.nodes[1], self.nodes[2]]
+        self.nodes[1].relationship = [self.nodes[0], self.nodes[3]]
+        self.nodes[2].relationship = [self.nodes[0], self.nodes[3]]
+        self.nodes[3].relationship = [self.nodes[1], self.nodes[2], self.nodes[4]]
+        self.nodes[4].relationship = [self.nodes[3]]
+
+
+g = Graph
+print(g)
+
+edge_list = [(1,2), (1,3), (2,3), (2,4), (4,5), (5,6), (6,7), (7,1)]
 
 def transform_edges(arr: list[tuple]) -> dict[int, list]:
     """
@@ -90,6 +107,7 @@ def transform_adj_matrix(edge_matrix: list[list[int]]) -> list[tuple]:
             if edge_matrix[i][j] == 1 and i < j:
                 result.append((i+1, j+1))
     return result
+
 
 
 print('Original edge list: ', edge_list)
